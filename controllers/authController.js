@@ -9,11 +9,22 @@ const handleErrors = (error) => {
         password: "",
         name: "",
         surname: "",
-        phone: ""
+        phone: "",
+        amount: ""
     };
+
+    if (error.message === "0 or lower") {
+        errors.amount = "You can't send 0 or lower than 0!";
+    } else if (error.message === "No money on account") {
+        errors.amount = "Not enough money. Top up your account!";
+    }
 
     if (error.message === "Incorrect email") {
         errors.email = "That email is not registered";
+    } else if (error.message === "No email") {
+        errors.email = "User with this email is not registered!";
+    } else if (error.message === "Same email") {
+        errors.email = "You cannot send money to you!";
     }
 
     if (error.message === "Incorrect password") {
@@ -108,9 +119,6 @@ module.exports.update_profile = async (req, res) => {
 
     try {
         const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
 
         if (name) user.name = name;
         if (surname) user.surname = surname;
@@ -124,6 +132,44 @@ module.exports.update_profile = async (req, res) => {
         res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
 
         res.status(200).json({ success: true, message: "Profile updated successfully" });
+    } catch (error) {
+        const errors = handleErrors(error);
+        res.status(400).json({ errors });
+    }
+};
+
+module.exports.send_money_post = async (req, res) => {
+    const senderId = req.params.id;
+    const { email, amount, currency } = req.body;
+    console.log(req.params);
+
+    try {
+        const sender = await User.findById(senderId);
+
+        const recipient = await User.findOne({ email });
+        if (!recipient) {
+            throw Error("No email of that user");
+        }
+
+        if (email === sender.email) {
+            throw Error("Same email");
+        }
+
+        if (amount <= 0) {
+            throw Error("0 or lower");
+        }
+
+        if (sender.wallet[currency] < amount) {
+            throw Error("No money on account");
+        }
+
+        sender.wallet[currency] -= amount;
+        recipient.wallet[currency] += amount;
+
+        await sender.save();
+        await recipient.save();
+
+        res.status(200).json({ success: true, message: "Money sent successfully!" });
     } catch (error) {
         const errors = handleErrors(error);
         res.status(400).json({ errors });

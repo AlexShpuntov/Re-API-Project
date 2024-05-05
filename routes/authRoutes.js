@@ -11,18 +11,17 @@ router.get("/", (req, res) => res.render("home"));
 router.get("/account", requireAuth, (req, res) => res.render("account"));
 
 router.get("/edit", requireAuth, (req, res) => res.render("edit"));
+router.put("/update-profile/:id", requireAuth, authController.update_profile);
 
 router.get("/send-money", requireAuth, (req, res) => res.render("send-money"));
+router.post("/send-money/:id", requireAuth, authController.send_money_post);
 
 router.get("/checkout", requireAuth, (req, res) => res.render("checkout"));
 
 router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"));
+router.get("/convert", currController.get_currencies);
 
 router.delete("/delete-account/:id", requireAuth, authController.delete_account);
-
-router.put("/update-profile/:id", requireAuth, authController.update_profile);
-
-router.get("/convert", currController.get_currencies);
 
 router.get("/signup", authController.signup_get);
 router.post("/signup", authController.signup_post);
