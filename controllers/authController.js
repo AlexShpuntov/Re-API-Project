@@ -12,17 +12,14 @@ const handleErrors = (error) => {
         phone: ""
     };
 
-    // incorrect email
     if (error.message === "Incorrect email") {
         errors.email = "That email is not registered";
     }
 
-    // incorrect password
     if (error.message === "Incorrect password") {
         errors.password = "That password is incorrect";
     }
 
-    // duplicate error code
     if (error.code === 11000) {
         const indexNames = Object.keys(error.keyPattern);
         indexNames.forEach((indexName) => {
@@ -36,7 +33,6 @@ const handleErrors = (error) => {
         return errors;
     }    
 
-    // validation errors
     if (error.message.includes("user validation failed")) {
         Object.values(error.errors).forEach(({properties}) => {
             errors[properties.path] = properties.message;
