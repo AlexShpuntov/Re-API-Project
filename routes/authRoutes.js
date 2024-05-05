@@ -32,6 +32,6 @@ router.post("/signin", authController.signin_post);
 
 router.get("/logout", requireAuth, authController.logout_get);
 
-router.post('/buy-currency/pay/:id', requireAuth, payController.payment);
+router.post("/buy-currency/pay/:id", requireAuth, payController.payment);
 
 module.exports = router;

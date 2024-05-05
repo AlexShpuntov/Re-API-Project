@@ -1,0 +1,174 @@
+openapi: 3.0.3
+info:
+  title: Authentication API
+  description: |-
+    API for user registration, login, logout, user profile management, and money transfer.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: 4messijess4@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+servers:
+  - url: http://localhost:5000
+    description: Local server
+tags:
+  - name: JWT
+    description: API for user registration, login, logout, user profile management
+  - name: ETC
+    description: Money transfer
+    
+      
+paths:
+  /signup:
+    post:
+      summary: Register a new user
+      tags: 
+        - JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignup'
+      responses:
+        '201':
+          description: Successful registration
+        '400':
+          description: Bad request
+
+  /signin:
+    post:
+      summary: User login
+      tags: 
+        - JWT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSignin'
+      responses:
+        '200':
+          description: Successful login
+        '400':
+          description: Bad request
+
+  /profile/{userId}:
+    put:
+      summary: Update user profile
+      tags: 
+        - JWT
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: User ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdate'
+      responses:
+        '200':
+          description: Successful profile update
+        '400':
+          description: Bad request
+
+  /logout:
+    get:
+      summary: User logout
+      tags: 
+        - JWT 
+      responses:
+        '200':
+          description: Successful logout
+
+  /send-money/{userId}:
+    post:
+      summary: Send money to another user
+      tags: 
+        - ETC
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          description: Sender ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MoneyTransfer'
+      responses:
+        '200':
+          description: Money sent successfully
+        '400':
+          description: Bad request
+
+components:
+  schemas:
+    UserSignup:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+      required:
+        - email
+        - password
+        - name
+        - surname
+        - phone
+
+    UserSignin:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    UserUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        surname:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        newPassword:
+          type: string
+
+    MoneyTransfer:
+      type: object
+      properties:
+        email:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+      required:
+        - email
+        - amount
+        - currency

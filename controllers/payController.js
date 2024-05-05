@@ -1,24 +1,24 @@
 const User = require("../models/User");
-const PayU = require('../public/js/payu-requests');
+const PayU = require("../public/js/payu-requests");
 
 merchantConfig = {
     merchantPosId: process.env.MERCHANT_POS_ID,
     key: process.env.KEY,
-    currencyCode: 'PLN'
+    currencyCode: "PLN"
 }
 
 PayU.setDefaultMerchant(merchantConfig);
 
 module.exports.payment = async (req, res) => {
     try {
-        const userIp = await fetch('https://ipinfo.io/json')
+        const userIp = await fetch("https://ipinfo.io/json")
             .then(response => response.json())
             .then(data => {
-                console.log('IP address of user:', data.ip);
+                console.log("IP address of user:", data.ip);
                 return data.ip;
             })
             .catch(error => {
-                console.error('Error of getting IP:', error);
+                console.error("Error of getting IP:", error);
                 throw new Error('Error of getting IP');
             });
 
@@ -51,7 +51,7 @@ module.exports.payment = async (req, res) => {
             redirectUri: response.body.redirectUri
         });
 
-        if (response.body.status.statusCode === 'SUCCESS') {
+        if (response.body.status.statusCode === "SUCCESS") {
             const recipient = await User.findById(req.params.id);
             const amountToAdd = parseFloat(req.body.amountTo);
             const currentAmount = parseFloat(recipient.wallet[req.body.toCurrency]);
