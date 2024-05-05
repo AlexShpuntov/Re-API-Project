@@ -151,6 +151,8 @@ Bootstrap 5 Form Pack Template
             }
 
             if (data.success) {
+                emailError.innerHTML = `<div class="email-error"></div>`;
+                amountError.innerHTML = `<div class="amount-error"></div>`;
 
                 paymentSuccess.innerHTML = `
                         <div class="alert alert-success d-flex align-items-center payment-success" role="alert">
