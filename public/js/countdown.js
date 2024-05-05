@@ -1,6 +1,6 @@
 (function($) {
     $.fn.countdown = function(options, callback) {
-
+        var interval;
         //custom 'this' selector
         thisEl = $(this);
 
