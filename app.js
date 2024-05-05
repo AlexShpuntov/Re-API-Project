@@ -15,6 +15,7 @@ const PORT = 5000 || process.env.PORT;
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());

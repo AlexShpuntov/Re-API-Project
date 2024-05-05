@@ -82,13 +82,11 @@ Bootstrap 5 Form Pack Template
 
                                 <div class="buttons">
                                     <div class="button-con">
-                                        <button>Convert Currency</button>
+                                        <button class="con">Convert Currency</button>
                                     </div>
-                                    <a href="checkout.html">
-                                        <div class="button-buy">
-                                            <button type="button">Buy this currency</button>
-                                        </div>
-                                    </a>
+                                    <div class="button-buy">
+                                        <button class="buy" type="button">Buy this currency</button>
+                                    </div>
                                 </div> 
                             </div>
                         </div>
@@ -105,6 +103,42 @@ Bootstrap 5 Form Pack Template
                 </div>
             </section>
         </main>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const buyButton = document.querySelector(".buy");
+
+        buyButton.addEventListener("click", function () {
+        const amountTo = document.getElementById("result").value;
+        const amountFrom = document.getElementById("amountFrom").value;
+        const toCurrency = document.getElementById("to").value;
+
+
+        fetch(`/buy-currency/pay/<%= user._id %>`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            amountFrom: amountFrom,
+            amountTo: amountTo,
+            toCurrency: toCurrency
+        })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === "Link has been created") {
+                window.location.href = data.redirectUri;
+            } else {
+                console.error("Failed to delete account:", data.error);
+            }
+        })
+        .catch(error => {
+        console.error("There has been a problem with your fetch operation:", error);
+        });
+            });
+        });
+        </script>
 
         <!-- JAVASCRIPT FILES -->
         <script src="js/buy-currency.js"></script>

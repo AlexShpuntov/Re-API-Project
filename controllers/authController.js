@@ -163,8 +163,8 @@ module.exports.send_money_post = async (req, res) => {
             throw Error("No money on account");
         }
 
-        sender.wallet[currency] -= amount;
-        recipient.wallet[currency] += amount;
+        sender.wallet[currency] = parseFloat(sender.wallet[currency]) - parseFloat(amount);
+        recipient.wallet[currency] = parseFloat(recipient.wallet[currency]) + parseFloat(amount);        
 
         await sender.save();
         await recipient.save();

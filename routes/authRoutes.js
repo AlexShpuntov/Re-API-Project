@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const authController = require("../controllers/authController");
 const currController = require("../controllers/currController");
+const payController = require("../controllers/payController");
 const { requireAuth, checkUser } = require("../middleware/authMiddleware");
 const router = Router();
 
@@ -29,6 +30,8 @@ router.post("/signup", authController.signup_post);
 router.get("/signin", authController.signin_get);
 router.post("/signin", authController.signin_post);
 
-router.get("/logout", authController.logout_get);
+router.get("/logout", requireAuth, authController.logout_get);
+
+router.post('/buy-currency/pay/:id', requireAuth, payController.payment);
 
 module.exports = router;
