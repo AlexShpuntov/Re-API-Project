@@ -12,7 +12,7 @@ document.getElementById('converter-form').addEventListener('submit', function(e)
     fetch(`/convert?from=${from}&to=${to}&amount=${amount}`)
     .then(response => response.json())
     .then(data => {
-        resultElement.value = `${data.convertedAmount}`;
+        resultElement.value = `${Math.round(data.convertedAmount)}`;
 
         const exchangeRate = data.exchangeRate; 
         const inverseRate = data.inverseRate;
