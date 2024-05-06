@@ -4,6 +4,6 @@
 https://currencyconverter-taw1-e14f133897db.herokuapp.com/
 
 <h3>Swagger Documentation:</h3>
-https://github.com/MettelBach/Re-API-Project/blob/main/SwaggerDocumentation.txt
+https://editor.swagger.io/?_gl=1*jhka3c*_gcl_aw*R0NMLjE3MTExNjY5NTIuQ2p3S0NBandrdXF2QmhBUUVpd0E2NVh4UUlfU0I5UkV4R28tMHlzMXc2QkR4SHgydFhMUFItZWxOeDVDT2V6a0o3VU9hUkIxX1BuRV9ob0NuUUVRQXZEX0J3RQ..*_gcl_dc*R0NMLjE3MTExNjY5NTIuQ2p3S0NBandrdXF2QmhBUUVpd0E2NVh4UUlfU0I5UkV4R28tMHlzMXc2QkR4SHgydFhMUFItZWxOeDVDT2V6a0o3VU9hUkIxX1BuRV9ob0NuUUVRQXZEX0J3RQ..*_gcl_au*ODQ5Mjg4NDguMTcxMDk1MTQ2OQ..&_ga=2.102932672.134562845.1711166952-194005147.1710951464&_gac=1.85523179.1711166955.CjwKCAjwkuqvBhAQEiwA65XxQI_SB9RExGo-0ys1w6BDxHx2tXLPR-elNx5COezkJ7UOaRB1_PnE_hoCnQEQAvD_BwE
     
 <h3>Unit Tests:</h3>
