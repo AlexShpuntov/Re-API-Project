@@ -17,8 +17,6 @@ router.put("/update-profile", requireAuth, authController.update_profile);
 router.get("/send-money", requireAuth, (req, res) => res.render("send-money"));
 router.post("/send-money", requireAuth, authController.send_money_post);
 
-router.get("/checkout", requireAuth, (req, res) => res.render("checkout"));
-
 router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"));
 router.get("/convert", currController.get_currencies);
 
