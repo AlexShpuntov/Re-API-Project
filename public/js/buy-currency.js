@@ -21,7 +21,7 @@ document.getElementById('converter-form').addEventListener('submit', function(e)
     })
     .catch(error => {
         resultElement.value = 0;
-        throw Error ('Error: Could not perform conversion.');
+        throw Error ('Error: Could not perform conversion');
     });
 });
 
