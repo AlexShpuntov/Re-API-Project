@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 // handle errors
 const handleErrors = (error) => {
@@ -102,9 +103,11 @@ module.exports.logout_get = (req, res) => {
 }
 
 module.exports.delete_account = async (req, res) => {
-    const userId = req.params.id;
-
     try {
+        const token_ = req.cookies.jwt;
+        const decodedToken = jwt.verify(token_, 'mettel bach secret');
+        const userId = decodedToken.id;
+
         await User.findByIdAndDelete(userId);
         res.clearCookie("jwt");
         res.status(200).json({ message: "Account deleted successfully" });
@@ -114,17 +117,24 @@ module.exports.delete_account = async (req, res) => {
 };
 
 module.exports.update_profile = async (req, res) => {
-    const userId = req.params.id;
     const { name, surname, phone, email, newPassword } = req.body;
 
     try {
+        const token_ = req.cookies.jwt;
+        const decodedToken = jwt.verify(token_, 'mettel bach secret');
+        const userId = decodedToken.id;
+
         const user = await User.findById(userId);
 
         if (name) user.name = name;
         if (surname) user.surname = surname;
         if (phone) user.phone = phone;
         if (email) user.email = email;
-        if (newPassword) user.password = newPassword;
+        if (newPassword) {
+            const salt = await bcrypt.genSalt();
+            let hashedPassword = await bcrypt.hash(newPassword, salt);
+            user.password = hashedPassword;
+        }
 
         await user.save();
 
@@ -138,12 +148,15 @@ module.exports.update_profile = async (req, res) => {
     }
 };
 
+
 module.exports.send_money_post = async (req, res) => {
-    const senderId = req.params.id;
     const { email, amount, currency } = req.body;
     console.log(req.params);
 
     try {
+        const token_ = req.cookies.jwt;
+        const decodedToken = jwt.verify(token_, 'mettel bach secret');
+        const senderId = decodedToken.id;
         const sender = await User.findById(senderId);
 
         const recipient = await User.findOne({ email });
@@ -169,6 +182,8 @@ module.exports.send_money_post = async (req, res) => {
         await sender.save();
         await recipient.save();
 
+        const token = createToken(senderId);
+        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(200).json({ success: true, message: "Money sent successfully!" });
     } catch (error) {
         const errors = handleErrors(error);

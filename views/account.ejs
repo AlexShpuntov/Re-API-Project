@@ -101,7 +101,7 @@ Bootstrap 5 Form Pack Template
 
             deleteAccountBtn.addEventListener("click", async () => {
                 try {
-                    fetch(`/delete-account/<%= user._id %>`, {
+                    fetch(`/delete-account`, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" }
                 })

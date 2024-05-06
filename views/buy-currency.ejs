@@ -117,7 +117,7 @@ Bootstrap 5 Form Pack Template
         const toCurrency = document.getElementById("to").value;
 
 
-        fetch(`/buy-currency/pay/<%= user._id %>`, {
+        fetch(`/buy-currency/pay`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

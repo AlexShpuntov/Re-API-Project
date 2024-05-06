@@ -45,7 +45,7 @@ Bootstrap 5 Form Pack Template
                     <div class="row">
 
                         <div class="col-lg-5 col-12 mx-auto">
-                            <form class="custom-form" role="form" method="post" action="/send-money/<%= user._id %>">
+                            <form class="custom-form" role="form" method="post" action="/send-money">
                                 <h2 class="hero-title text-center mb-4 pb-2">Send Money</h2>
                             
                                 <div class="form-floating mt-4">
@@ -111,7 +111,7 @@ Bootstrap 5 Form Pack Template
         const currency = document.querySelector(".form-select").value;
 
         try {
-            const response = await fetch("/send-money/<%= user._id %>", {
+            const response = await fetch("/send-money", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -64,6 +64,9 @@ Bootstrap 5 Form Pack Template
                                                 <h4 class="text-right">Profile Settings</h4>
                                             </div>
                                             <form class="custom-form" role="form">
+
+                                            <div class="payment-success"></div>
+
                                             <div class="row mt-2">
                                                 <div class="col-md-6">
                                                     <label class="labels">Name</label>
@@ -135,6 +138,7 @@ Bootstrap 5 Form Pack Template
                 const nameError = document.querySelector(".name-error");
                 const surnameError = document.querySelector(".surname-error");
                 const phoneError = document.querySelector(".phone-error");
+                const paymentSuccess = document.querySelector(".payment-success");
 
                 saveProfileBtn.addEventListener("click", async () => {
                     const data = {
@@ -148,7 +152,7 @@ Bootstrap 5 Form Pack Template
                     console.log(data.name);
                     
                     try {
-                        const res = await fetch("/update-profile/<%= user._id %>", {
+                        const res = await fetch("/update-profile", {
                             method: "PUT",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(data)
@@ -221,10 +225,26 @@ Bootstrap 5 Form Pack Template
                         } else {
                             phoneError.innerHTML = `<div class="phone-error"></div>`;
                         }
-                    }
-
+                        }
                         if (response.success) {
+                            nameError.innerHTML = `<div class="name-error"></div>`;
+                            surnameError.innerHTML = `<div class="surname-error"></div>`;
+                            phoneError.innerHTML = `<div class="phone-error"></div>`;
+                            emailError.innerHTML = `<div class="email-error"></div>`;
+                            passwordError.innerHTML = `<div class="password-error"></div>`;
+
+                            paymentSuccess.innerHTML = `
+                            <div class="alert alert-success d-flex align-items-center payment-success" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <div>
+                                Successfully updated!
+                            </div>
+                            </div>
+                            `;
+
+                            setTimeout(() => {
                             window.location.reload();
+                            }, 3000);
                         } else {
                             console.error(response.error);
                         }
