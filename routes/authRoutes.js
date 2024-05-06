@@ -10,26 +10,22 @@ router.get("*", checkUser);
 router.get("/", (req, res) => res.render("home"));
 
 router.get("/account", requireAuth, (req, res) => res.render("account"));
-
 router.get("/edit", requireAuth, (req, res) => res.render("edit"));
+router.get("/logout", requireAuth, authController.logout_get);
 router.put("/update-profile", requireAuth, authController.update_profile);
+router.delete("/delete-account", requireAuth, authController.delete_account);
 
 router.get("/send-money", requireAuth, (req, res) => res.render("send-money"));
 router.post("/send-money", requireAuth, authController.send_money_post);
 
 router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"));
 router.get("/convert", currController.get_currencies);
-
-router.delete("/delete-account", requireAuth, authController.delete_account);
+router.post("/buy-currency/pay", requireAuth, payController.payment);
 
 router.get("/signup", authController.signup_get);
 router.post("/signup", authController.signup_post);
 
 router.get("/signin", authController.signin_get);
 router.post("/signin", authController.signin_post);
-
-router.get("/logout", requireAuth, authController.logout_get);
-
-router.post("/buy-currency/pay", requireAuth, payController.payment);
 
 module.exports = router;
