@@ -20,7 +20,8 @@ document.getElementById('converter-form').addEventListener('submit', function(e)
         priceTwo.textContent = `1 ${to.toUpperCase()} = ${exchangeRate.toFixed(3)} ${from.toUpperCase()}`;
     })
     .catch(error => {
-        resultElement.value = 'Error: Could not perform conversion.';
+        resultElement.value = 0;
+        throw Error ('Error: Could not perform conversion.');
     });
 });
 
