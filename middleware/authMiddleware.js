@@ -19,6 +19,23 @@ const requireAuth = (req, res, next) => {
     }
 }
 
+const requireUnAuth = (req, res, next) => {
+    const token = req.cookies.jwt;
+
+    if (token) {
+        jwt.verify(token, "mettel bach secret", (error, decodedToken) => {
+            if (error) {
+                console.log(error.message);
+                res.redirect("/signin");
+            } else {
+                console.log(decodedToken);
+                res.redirect("/profile");
+                next();
+            }
+        });
+    }
+}
+
 const checkUser = (req, res, next) => {
     const token = req.cookies.jwt;
 
@@ -41,4 +58,4 @@ const checkUser = (req, res, next) => {
     }
 }
 
-module.exports = { requireAuth, checkUser }
+module.exports = { requireAuth, checkUser, requireUnAuth }
