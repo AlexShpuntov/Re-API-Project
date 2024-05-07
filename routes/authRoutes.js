@@ -22,10 +22,10 @@ router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"
 router.get("/convert", currController.get_currencies);
 router.post("/buy-currency/pay", requireAuth, payController.payment);
 
-router.get("/signup", authController.signup_get);
+router.get("/signup", (req, res) => res.render("signin"));
 router.post("/signup", authController.signup_post);
 
-router.get("/signin", authController.signin_get);
+router.get("/signin", (req, res) => res.render("signup"));
 router.post("/signin", authController.signin_post);
 
 module.exports = router;
