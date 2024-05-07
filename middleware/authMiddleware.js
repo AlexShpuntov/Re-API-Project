@@ -20,6 +20,7 @@ const requireAuth = (req, res, next) => {
 }
 
 const requireUnAuth = (req, res, next) => {
+    try {
     const token = req.cookies.jwt;
 
     if (token) {
@@ -33,6 +34,9 @@ const requireUnAuth = (req, res, next) => {
                 next();
             }
         });
+    }
+    } catch (error) {
+        console.log("ok");
     }
 }
 
