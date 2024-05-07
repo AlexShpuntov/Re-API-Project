@@ -2,7 +2,7 @@ const { Router } = require("express");
 const authController = require("../controllers/authController");
 const currController = require("../controllers/currController");
 const payController = require("../controllers/payController");
-const { requireAuth, checkUser, requireUnAuth } = require("../middleware/authMiddleware");
+const { requireAuth, checkUser } = require("../middleware/authMiddleware");
 const router = Router();
 
 router.get("*", checkUser);
@@ -22,10 +22,10 @@ router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"
 router.get("/convert", currController.get_currencies);
 router.post("/buy-currency/pay", requireAuth, payController.payment);
 
-router.get("/signup", requireUnAuth, authController.signup_get);
+router.get("/signup", authController.signup_get);
 router.post("/signup", authController.signup_post);
 
-router.get("/signin", requireUnAuth, authController.signin_get);
+router.get("/signin", authController.signin_get);
 router.post("/signin", authController.signin_post);
 
 module.exports = router;
