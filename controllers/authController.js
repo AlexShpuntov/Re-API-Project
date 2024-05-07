@@ -59,14 +59,6 @@ const createToken = (id) => {
     return jwt.sign({ id }, "mettel bach secret", { expiresIn: maxAge });
 }
 
-module.exports.signup_get = (req, res) => {
-    res.render("signup");
-}
-
-module.exports.signin_get = (req, res) => {
-    res.render("signin");
-}
-
 module.exports.signup_post = async (req, res) => {
     const { email, password, name, surname, phone } = req.body;
 
