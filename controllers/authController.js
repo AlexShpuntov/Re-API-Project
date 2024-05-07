@@ -56,9 +56,7 @@ const handleErrors = (error) => {
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-    return jwt.sign({ id }, "mettel bach secret", {
-        expiresIn: maxAge
-    });
+    return jwt.sign({ id }, "mettel bach secret", { expiresIn: maxAge });
 }
 
 module.exports.signup_get = (req, res) => {
