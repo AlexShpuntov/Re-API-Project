@@ -1,11 +1,8 @@
-document.getElementById('converter-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-
+function convertCurrency() {
     const amount = document.getElementById('amountFrom').value;
     const from = document.getElementById('from').value;
     const to = document.getElementById('to').value;
     const resultElement = document.getElementById('result');
-
     const priceOne = document.querySelector('.price-one');
     const priceTwo = document.querySelector('.price-two');
 
@@ -21,9 +18,15 @@ document.getElementById('converter-form').addEventListener('submit', function(e)
     })
     .catch(error => {
         resultElement.value = 0;
-        throw Error ('Error: Could not perform conversion');
+        throw Error('Error: Cannot do this operation');
     });
-});
+}
+
+document.getElementById('amountFrom').addEventListener('input', convertCurrency);
+document.getElementById('from').addEventListener('change', convertCurrency);
+document.getElementById('to').addEventListener('change', convertCurrency);
+
+convertCurrency();
 
 const currencies = [
     { code: 'PLN', name: 'Polish Złoty' },
