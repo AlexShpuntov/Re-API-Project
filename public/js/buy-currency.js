@@ -2,6 +2,8 @@ function formatInput(input) {
     input.value = parseFloat(input.value).toFixed(2);
 }
 
+document.getElementById("amountFrom").value = "0.00";
+    
 function convertCurrency() {
     const amount = document.getElementById('amountFrom').value;
     const from = document.getElementById('from').value;
@@ -21,7 +23,7 @@ function convertCurrency() {
         priceTwo.textContent = `1 ${to.toUpperCase()} = ${exchangeRate.toFixed(3)} ${from.toUpperCase()}`;
     })
     .catch(error => {
-        resultElement.value = 0;
+        resultElement.value = "0.00";
         throw Error('Error: Cannot do this operation');
     });
 }

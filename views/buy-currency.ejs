@@ -59,7 +59,7 @@ Bootstrap 5 Form Pack Template
                                     <div class="block">
                                         <h2>I pay</h2>
                                         <div class="input-container">
-                                            <input type="number" id="amountFrom" placeholder="Amount" step="any" min="0" oninput="formatInput(this)">
+                                            <input type="number" id="amountFrom" placeholder="Amount" step="0.01" min="0.00" oninput="formatInput(this)">
                                             <select id="from">
                         
                                             </select>
@@ -74,7 +74,7 @@ Bootstrap 5 Form Pack Template
                                     <div class="block">
                                         <h2>I get</h2>
                                         <div class="input-container">
-                                            <input type="text" id="result" placeholder="Amount" readonly>
+                                            <input type="text" id="result" placeholder="Amount" min="0.00" oninput="formatInput(this)" readonly>
                                             <select id="to">
                                                 
                                             </select>
