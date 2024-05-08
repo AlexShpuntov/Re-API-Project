@@ -1,3 +1,7 @@
+function formatInput(input) {
+    input.value = parseFloat(input.value).toFixed(2);
+}
+
 function convertCurrency() {
     const amount = document.getElementById('amountFrom').value;
     const from = document.getElementById('from').value;
