@@ -9,7 +9,7 @@ function convertCurrency() {
     fetch(`/convert?from=${from}&to=${to}&amount=${amount}`)
     .then(response => response.json())
     .then(data => {
-        resultElement.value = `${Math.round(data.convertedAmount)}`;
+        resultElement.value = parseFloat(data.convertedAmount).toFixed(2);
 
         const exchangeRate = data.exchangeRate; 
         const inverseRate = data.inverseRate;
