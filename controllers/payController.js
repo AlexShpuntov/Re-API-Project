@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 merchantConfig = {
     merchantPosId: process.env.MERCHANT_POS_ID,
     key: process.env.KEY,
-    currencyCode: "USD"
+    currencyCode: "PLN"
 }
 
 const maxAge = 3 * 24 * 60 * 60;
