@@ -22,7 +22,7 @@ const handleErrors = (error) => {
 
     if (error.message === "Incorrect email") {
         errors.email = "That email is not registered";
-    } else if (error.message === "No email") {
+    } else if (error.message === "No email of that user") {
         errors.email = "User with this email is not registered!";
     } else if (error.message === "Same email") {
         errors.email = "You cannot send money to you!";
@@ -141,7 +141,6 @@ module.exports.update_profile = async (req, res) => {
 
 module.exports.send_money_post = async (req, res) => {
     const { email, amount, currency } = req.body;
-    console.log(req.params);
 
     try {
         const token_ = req.cookies.jwt;
