@@ -7,3 +7,4 @@ https://currencyconverter-taw1-e14f133897db.herokuapp.com/
 https://github.com/MettelBach/Re-API-Project/blob/main/SwaggerDocumentation.txt
     
 <h3>Unit Tests:</h3>
+https://github.com/MettelBach/Re-API-Project/blob/main/tests/auth.test.js
