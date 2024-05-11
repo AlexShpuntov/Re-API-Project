@@ -1,8 +1,5 @@
 function formatInput(input) {
-    var value = parseFloat(input.value);
-    if (!isNaN(value)) {
-        input.value = value.toFixed(2);
-    }
+    input.value = parseFloat(input.value).toFixed(2);
 }
 
 document.getElementById("amountFrom").value = "0.00";
