@@ -27,7 +27,7 @@ connectDB();
 
 app.use(authRoutes);
 app.use((req, res) => res.status(404).render("404page"));
-
+module.exports = app;
 app.listen(PORT, () => {
   console.log(`App's listening on port ${PORT}`);
 });
