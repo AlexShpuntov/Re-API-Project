@@ -55,7 +55,7 @@ paths:
         '400':
           description: Bad request
 
-  /profile/{userId}:
+  /profile:
     put:
       summary: Update user profile
       tags: 
@@ -88,7 +88,7 @@ paths:
         '200':
           description: Successful logout
 
-  /send-money/{userId}:
+  /send-money:
     post:
       summary: Send money to another user
       tags: 
