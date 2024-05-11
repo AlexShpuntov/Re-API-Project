@@ -21,9 +21,14 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "npm jest"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.2.0",
+    "supertest": "^7.0.0"
+  }
 }
