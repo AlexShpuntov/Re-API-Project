@@ -118,16 +118,22 @@ module.exports.update_profile = async (req, res) => {
 
         const user = await User.findById(userId);
 
+        if (!user) {
+            throw Error('User not found');
+        }
+
         if (name) user.name = name;
         if (surname) user.surname = surname;
         if (phone) user.phone = phone;
         if (email) user.email = email;
-        if (newPassword.length >= 6) {
-            const salt = await bcrypt.genSalt();
-            let hashedPassword = await bcrypt.hash(newPassword, salt);
-            user.password = hashedPassword;
-        } else {
-          throw Error('Password length update error');
+        if (newPassword) {
+            if (newPassword.length >= 6) {
+                const salt = await bcrypt.genSalt();
+                let hashedPassword = await bcrypt.hash(newPassword, salt);
+                user.password = hashedPassword;
+            } else {
+                throw Error('Password must contain more than 5 symbols');
+            }
         }
 
         await user.save();
@@ -137,10 +143,8 @@ module.exports.update_profile = async (req, res) => {
 
         res.status(200).json({ success: true, message: "Profile updated successfully" });
     } catch (error) {
-        if (!res.headersSent) {
-          const errors = handleErrors(error);
-          res.status(400).json({ errors });
-      }
+        const errors = handleErrors(error);
+        res.status(400).json({ errors });
     }
 };
 
