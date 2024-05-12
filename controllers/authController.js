@@ -30,8 +30,8 @@ const handleErrors = (error) => {
 
     if (error.message === "Incorrect password") {
         errors.password = "That password is incorrect";
-    } else if (err.message === 'Password length update error') {
-    errors.password = 'Password must contains more than 5 symbols';
+    } else if (error.message === 'Password length update error') {
+        errors.password = 'Password must contains more than 5 symbols';
     }
 
     if (error.code === 11000) {
