@@ -30,6 +30,8 @@ const handleErrors = (error) => {
 
     if (error.message === "Incorrect password") {
         errors.password = "That password is incorrect";
+    } else if (err.message === 'Password length update error') {
+    errors.password = 'Password must contains more than 5 symbols';
     }
 
     if (error.code === 11000) {
@@ -120,10 +122,12 @@ module.exports.update_profile = async (req, res) => {
         if (surname) user.surname = surname;
         if (phone) user.phone = phone;
         if (email) user.email = email;
-        if (newPassword) {
+        if (newPassword.length >= 6) {
             const salt = await bcrypt.genSalt();
             let hashedPassword = await bcrypt.hash(newPassword, salt);
             user.password = hashedPassword;
+        } else {
+          throw Error('Password length update error');
         }
 
         await user.save();
@@ -133,8 +137,10 @@ module.exports.update_profile = async (req, res) => {
 
         res.status(200).json({ success: true, message: "Profile updated successfully" });
     } catch (error) {
-        const errors = handleErrors(error);
-        res.status(400).json({ errors });
+        if (!res.headersSent) {
+          const errors = handleErrors(error);
+          res.status(400).json({ errors });
+      }
     }
 };
 
