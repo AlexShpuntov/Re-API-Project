@@ -14,8 +14,8 @@ servers:
   - url: https://currencyconverter-taw1-e14f133897db.herokuapp.com/
     description: Re API Project
 tags:
-  - name: JWT
-    description: API for user registration, login, logout, user profile management
+  - name: Auth JWT
+    description: API for user registration, login, logout, delete user account and user profile management
   - name: ETC
     description: Money transfer
     
@@ -23,7 +23,7 @@ paths:
   /signup:
     post:
       tags: 
-        - JWT
+        - Auth JWT
       summary: Create a new user account
       description: Creates a new user account with the provided credentials.
       requestBody:
@@ -70,7 +70,7 @@ paths:
   /signin:
     post:
       tags: 
-        - JWT
+        - Auth JWT
       summary: Authenticate user
       description: Authenticates user with provided email and password.
       requestBody:
@@ -113,7 +113,7 @@ paths:
   /logout:
     get:
       tags: 
-        - JWT
+        - Auth JWT
       summary: Log out user
       description: Logs out the currently authenticated user.
       responses:
@@ -125,7 +125,7 @@ paths:
   /update-profile:
     put:
       tags: 
-        - JWT
+        - Auth JWT
       summary: Update user profile
       description: Update user profile information such as name, surname, phone, email, and password.
       security:
@@ -168,7 +168,7 @@ paths:
   /delete-account:
     delete:
       tags: 
-        - JWT
+        - Auth JWT
       summary: Delete user account
       description: Deletes the user account and all associated data.
       security:
