@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Authentication API
   description: |-
-    API for user registration, login, logout, user profile management, and money transfer.
+    API for user registration, login, logout, user profile management, delete user account and money transfer.
   termsOfService: http://swagger.io/terms/
   contact:
     email: 4messijess4@gmail.com
@@ -19,156 +19,213 @@ tags:
   - name: ETC
     description: Money transfer
     
-      
 paths:
   /signup:
     post:
-      summary: Register a new user
       tags: 
         - JWT
+      summary: Create a new user account
+      description: Creates a new user account with the provided credentials.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSignup'
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 6
+                name:
+                  type: string
+                surname:
+                  type: string
+                phone:
+                  type: string
       responses:
         '201':
-          description: Successful registration
+          description: User account created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                    description: The ID of the newly created user
         '400':
-          description: Bad request
+          description: Bad request, invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: Object containing error messages for each field
 
   /signin:
     post:
-      summary: User login
       tags: 
         - JWT
+      summary: Authenticate user
+      description: Authenticates user with provided email and password.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserSignin'
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 6
       responses:
         '200':
-          description: Successful login
+          description: User authenticated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: string
+                    description: The ID of the authenticated user
         '400':
-          description: Bad request
-
-  /profile/{userId}:
-    put:
-      summary: Update user profile
-      tags: 
-        - JWT
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          description: User ID
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserUpdate'
-      responses:
-        '200':
-          description: Successful profile update
-        '400':
-          description: Bad request
+          description: Bad request, invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: Object containing error messages for each field
+        '401':
+          description: Unauthorized, invalid credentials
 
   /logout:
     get:
-      summary: User logout
       tags: 
-        - JWT 
+        - JWT
+      summary: Log out user
+      description: Logs out the currently authenticated user.
       responses:
         '200':
-          description: Successful logout
+          description: User logged out successfully
+        '401':
+          description: Unauthorized, user not logged in
 
-  /send-money/{userId}:
-    post:
-      summary: Send money to another user
+  /update-profile:
+    put:
       tags: 
-        - ETC
-      parameters:
-        - in: path
-          name: userId
-          required: true
-          description: Sender ID
-          schema:
-            type: string
+        - JWT
+      summary: Update user profile
+      description: Update user profile information such as name, surname, phone, email, and password.
+      security:
+        - cookieAuth: []
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MoneyTransfer'
+              type: object
+              properties:
+                name:
+                  type: string
+                surname:
+                  type: string
+                phone:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                newPassword:
+                  type: string
+                  minLength: 6
+      responses:
+        '200':
+          description: Profile updated successfully
+        '400':
+          description: Bad request, invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: Object containing error messages for each field
+        '401':
+          description: Unauthorized, user not logged in
+
+  /delete-account:
+    delete:
+      tags: 
+        - JWT
+      summary: Delete user account
+      description: Deletes the user account and all associated data.
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Account deleted successfully
+        '401':
+          description: Unauthorized, user not logged in
+
+  /send-money:
+    post:
+      tags: 
+        - ETC
+      summary: Send money to another user
+      description: Allows the authenticated user to send money to another user's wallet.
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                amount:
+                  type: number
+                currency:
+                  type: string
+                  enum: [PLN, UAH, USD, EUR]
       responses:
         '200':
           description: Money sent successfully
         '400':
-          description: Bad request
-
+          description: Bad request, invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: object
+                    description: Object containing error messages for each field
+        '401':
+          description: Unauthorized, user not logged in
+        '404':
+          description: Not Found, recipient user not found
+        '409':
+          description: Conflict, same email as sender
+security:
+  - cookieAuth: []
 components:
-  schemas:
-    UserSignup:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-        name:
-          type: string
-        surname:
-          type: string
-        phone:
-          type: string
-      required:
-        - email
-        - password
-        - name
-        - surname
-        - phone
-
-    UserSignin:
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      required:
-        - email
-        - password
-
-    UserUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        surname:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-        newPassword:
-          type: string
-
-    MoneyTransfer:
-      type: object
-      properties:
-        email:
-          type: string
-        amount:
-          type: number
-        currency:
-          type: string
-      required:
-        - email
-        - amount
-        - currency
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: jwt
