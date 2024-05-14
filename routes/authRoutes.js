@@ -19,7 +19,7 @@ router.get("/send-money", requireAuth, (req, res) => res.render("send-money"));
 router.post("/send-money", requireAuth, authController.send_money_post);
 
 router.get("/buy-currency", requireAuth, (req, res) => res.render("buy-currency"));
-router.get("/convert", requireAuth, currController.get_currencies);
+router.get("/convert", currController.get_currencies);
 router.post("/buy-currency/pay", requireAuth, payController.payment);
 
 router.get("/signup", requireUnAuth, (req, res) => res.render("signup"));
