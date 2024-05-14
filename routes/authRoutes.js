@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("*", checkUser);
 
-router.get("/", checkUser, (req, res) => res.render("home"));
+router.get("/", (req, res) => res.render("home"));
 
 router.get("/account", requireAuth, (req, res) => res.render("account"));
 router.get("/edit", requireAuth, (req, res) => res.render("edit"));
