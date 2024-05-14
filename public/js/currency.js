@@ -1,4 +1,4 @@
-
+document.addEventListener('DOMContentLoaded', function() {
     const currencies = ['USD', 'EUR', 'UAH'];
 
     currencies.forEach(currency => {
@@ -13,3 +13,4 @@
                 console.error(`Error retrieving conversion rate for ${currency}:`, error);
             });
     });
+});
