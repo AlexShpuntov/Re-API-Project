@@ -118,10 +118,6 @@ module.exports.update_profile = async (req, res) => {
 
         const user = await User.findById(userId);
 
-        if (!user) {
-            throw Error('User not found');
-        }
-
         if (name) user.name = name;
         if (surname) user.surname = surname;
         if (phone) user.phone = phone;
@@ -132,7 +128,7 @@ module.exports.update_profile = async (req, res) => {
                 let hashedPassword = await bcrypt.hash(newPassword, salt);
                 user.password = hashedPassword;
             } else {
-                throw Error('Password must contain more than 5 symbols');
+                throw Error("Password length update error");
             }
         }
 
