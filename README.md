@@ -8,3 +8,5 @@ https://github.com/MettelBach/Re-API-Project/blob/main/SwaggerDocumentation.txt
     
 <h3>Unit Tests:</h3>
 https://github.com/MettelBach/Re-API-Project/blob/main/tests/auth.test.js
+
+<h3>Informacja o tranzakcjach</h3>
