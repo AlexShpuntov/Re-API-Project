@@ -10,3 +10,4 @@ https://github.com/MettelBach/Re-API-Project/blob/main/SwaggerDocumentation.txt
 https://github.com/MettelBach/Re-API-Project/blob/main/tests/auth.test.js
 
 <h3>Informacja o tranzakcjach</h3>
+https://github.com/MettelBach/Re-API-Project/blob/main/InformacjaOTranzakcjach.jpg
